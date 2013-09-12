@@ -8,11 +8,11 @@ import (
 	"regexp"
 )
 
-func visit(path string, f os.FileInfo, err error) error {
+func visit(path string, file os.FileInfo, err error) error {
 	red := "\033[31m"
 	reset := "\033[0m"
 
-	if path == "." {
+	if file.IsDir() {
 		return nil
 	}
 
