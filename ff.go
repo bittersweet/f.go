@@ -16,8 +16,8 @@ func visit(path string, file os.FileInfo, err error) error {
 		return nil
 	}
 
-	// Ignore .git and tmp directories
-	ignore, _ := regexp.Compile(".git|tmp")
+	// Ignore .git directory
+	ignore, _ := regexp.Compile(".git")
 	if ignore.MatchString(path) == true {
 		return nil
 	}
