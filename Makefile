@@ -1,4 +1,4 @@
 all:
-	@@go build ff.go
-	@@cp ff /usr/local/bin/
+	@@go build f.go
+	@@cp f /usr/local/bin/
 	@@echo "built and moved"
