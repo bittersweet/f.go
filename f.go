@@ -9,8 +9,7 @@ import (
 )
 
 func visit(path string, file os.FileInfo, err error) error {
-	red := "\033[31m"
-	reset := "\033[0m"
+	query := flag.Arg(0)
 
 	if file.IsDir() {
 		return nil
@@ -22,20 +21,26 @@ func visit(path string, file os.FileInfo, err error) error {
 		return nil
 	}
 
-	r, err := regexp.Compile(flag.Arg(0))
-
+	r, err := regexp.Compile(query)
 	if err != nil {
 		fmt.Printf("Problem with regex: %v\n", err)
 		return nil
 	}
 
 	if r.MatchString(path) == true {
-		replaceWith := fmt.Sprintf("%v%v%v", red, flag.Arg(0), reset)
+		replaceWith := colorizeMatch(query)
 		formattedResult := r.ReplaceAllString(path, replaceWith)
 		fmt.Println(formattedResult)
 	}
 
 	return nil
+}
+
+func colorizeMatch(match string) string {
+	red := "\033[31m"
+	reset := "\033[0m"
+
+	return fmt.Sprintf("%v%v%v", red, match, reset)
 }
 
 func main() {
