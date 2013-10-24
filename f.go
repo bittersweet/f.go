@@ -21,16 +21,15 @@ func visit(path string, file os.FileInfo, err error) error {
 		return nil
 	}
 
-	r, err := regexp.Compile(query)
+	r, err := regexp.Compile(`(?i)` + query)
 	if err != nil {
 		fmt.Printf("Problem with regex: %v\n", err)
 		return nil
 	}
 
 	if r.MatchString(path) == true {
-		replaceWith := colorizeMatch(query)
-		formattedResult := r.ReplaceAllString(path, replaceWith)
-		fmt.Println(formattedResult)
+		result := r.ReplaceAllStringFunc(path, colorizeMatch)
+		fmt.Println(result)
 	}
 
 	return nil
